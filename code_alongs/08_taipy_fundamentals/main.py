@@ -7,18 +7,26 @@ fig = px.line(df.query("country == 'Sweden'"), x="year", y="pop")
 
 slider_value = 1
 selected_fruit = "tomato"
-number1 = 0
-number2 = 0
+number1 = 1
+number2 = 1
 
 sum_ = number1 + number2
-
+difference = number1 - number2
+product = number1 * number2
+quotient = number1 / number2
 
 def perform_calculation(state):
     state.sum_ = int(state.number1) + int(state.number2)
+    state.difference = int(state.number1) - int(state.number2)
+    state.product = int(state.number1) * int(state.number2)
+    state.quotient = int(state.number1) / int(state.number2)
 
 
 def clear_results(state):
     state.sum_ = ""
+    state.difference = ""
+    state.product = ""
+    state.quotient = ""
 
 
 with tgb.Page() as page:
@@ -52,12 +60,15 @@ with tgb.Page() as page:
                 # on_change -> this function will run when value is changed
                 tgb.input("{number2}", on_change=clear_results)
 
-                tgb.text("You have typed in {number1} and {number2}")
+                tgb.text("You have typed in {number1} and {number2}", mode="md")
 
                 # on_action -> this function will run when button is clicked
                 tgb.button(label="CALCULATU", class_name="plain", on_action=perform_calculation)
 
-                tgb.text("{number1} + {number2} = {sum_}")
+                tgb.text("{number1} + {number2} = {sum_}", mode="md")
+                tgb.text("{number1} - {number2} = {difference}", mode="md")
+                tgb.text("{number1} * {number2} = {product}", mode="md")
+                tgb.text("{number1} / {number2} = {quotient}", mode="md")
 
             with tgb.part() as column_data:
                 tgb.table("{df}", page_size=10)
