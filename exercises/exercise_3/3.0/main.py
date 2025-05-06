@@ -4,6 +4,7 @@ import taipy.gui.builder as tgb
 # images
 cat_image = "assets/fake_cat.png"
 bunny_image = "assets/fake_sad_rabbit.png"
+emoji = "assets/emoji.jpg"
 
 # variables
 word_input = ""
@@ -18,6 +19,12 @@ def clear_result(state):
 
 def palindrome(state):
     string = state.word_input.lower().replace(" ", "")
+
+    if not string:
+        state.result = "⚠️ Please enter a word."
+        state.current_image = "assets/emoji.jpg"
+        return
+    
     if string == string[::-1]:
         state.counter += 1
         state.result = "✅ Correct!"
@@ -37,7 +44,7 @@ with tgb.Page() as page:
     with tgb.part(class_name="container card"):
         tgb.text("# Palindrome game", mode="md")
         tgb.text(
-            "Palindrome is a set of characters that is the same both ways, for example 'racecar'",
+            "Palindrome is a set of characters that is the same both ways, for example 'racecar'.",
             mode="md",
         )
         tgb.text(
