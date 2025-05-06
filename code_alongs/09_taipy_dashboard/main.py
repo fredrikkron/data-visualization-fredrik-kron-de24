@@ -9,11 +9,12 @@ df = pd.read_excel(
     skiprows=5,
 )
 
+
 with tgb.Page() as page:
     with tgb.part(class_name="container card"):
         tgb.text("# MYH dashboard 2024", mode="md")
 
-        with tgb.layout(columns="2,1"):
+        with tgb.layout(columns="2 1"):
             with tgb.part(class_name="card"):
                 tgb.text("Graph")
 
@@ -22,7 +23,7 @@ with tgb.Page() as page:
 
         with tgb.part(class_name="card"):
             tgb.text("Raw data")
-            tgb.table(df)
+            tgb.table("{df}")
 
 
 if __name__ == "__main__":
