@@ -8,6 +8,7 @@ bunny_image = "assets/fake_sad_rabbit.png"
 # variables
 word_input = ""
 result = ""
+current_image = ""
 counter = 0
 
 
@@ -20,11 +21,11 @@ def palindrome(state):
     if string == string[::-1]:
         state.counter += 1
         state.result = "✅ Correct!"
-        state.cat_image = True
+        state.current_image = state.cat_image
     else:
         state.counter -= 1
         state.result = "❌ Wrong answer!"
-        state.bunny_image = True
+        state.current_image = state.bunny_image
 
 
 def submit_word(state):
@@ -33,16 +34,26 @@ def submit_word(state):
 
 # frontend layout
 with tgb.Page() as page:
-    tgb.text("# Palindrome game", mode="md")
-    tgb.text("Type in a palindrome word:", mode="md")
-    tgb.input(word_input, on_action=clear_result)
+    with tgb.part(class_name="container card"):
+        tgb.text("# Palindrome game", mode="md")
+        tgb.text(
+            "Palindrome is a set of characters that is the same both ways, for example 'racecar'",
+            mode="md",
+        )
+        tgb.text(
+            "Try and type in other palindromes to gather points but be careful because each non-palindrome give a minus point.",
+            mode="md",
+        )
 
-    tgb.button(label="Submit", on_action=submit_word)
+        tgb.text("Type in a palindrome word:", mode="md")
+        tgb.input(value="{word_input}", on_action=clear_result)
 
-    tgb.text("Palindrome = {result}.")
-    tgb.text("Your current score is {counter}.")
-    # tgb.image(cat_image)
-    # tgb.image(bunny_image)
+        tgb.button(label="Submit", class_name="plain", on_action=submit_word)
+
+        tgb.text("{result}")
+        tgb.text("Your current score is {counter}.")
+
+        tgb.image("{current_image}", width="400px", height="400px")
 
 # run application
 if __name__ == "__main__":
